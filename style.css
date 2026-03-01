@@ -78,7 +78,7 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
-    font-size: 1.8rem;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
     font-weight: 700;
     letter-spacing: 2px;
 }
@@ -95,7 +95,7 @@ body {
 }
 
 .subtitle {
-    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    font-size: clamp(1.2rem, 3vw, 1.6rem);
     font-weight: 300;
     letter-spacing: 0.5px;
     margin: 0;
@@ -175,14 +175,14 @@ body {
 }
 
 .welcome-section h2 {
-    font-size: clamp(1.2rem, 3vw, 1.6rem);
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
     font-weight: 500;
     margin: 0 0 clamp(5px, 1.5vh, 10px) 0;
     letter-spacing: 1px;
 }
 
 .welcome-section p {
-    font-size: clamp(0.75rem, 2vh, 1.05rem);
+    font-size: clamp(1rem, 2.5vh, 1.35rem);
     font-weight: 300;
     line-height: clamp(1.3, 2.5vh, 1.6);
     margin: 0;
@@ -353,14 +353,14 @@ body {
     }
 
     .logo {
-        font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+        font-size: clamp(1.5rem, 3vw, 1.8rem);
         justify-content: center;
         width: 100%;
         flex-shrink: 0;
     }
 
     .subtitle {
-        font-size: clamp(0.85rem, 2.2vw, 1rem);
+        font-size: clamp(1.1rem, 2.8vw, 1.4rem);
         margin: 0;
         flex-shrink: 0;
     }
@@ -372,7 +372,11 @@ body {
     }
 
     .welcome-section h2 {
-     main-layout {
+        font-size: clamp(1.3rem, 3.2vw, 1.6rem);
+        margin-bottom: clamp(6px, 1vh, 10px);
+    }
+
+    .main-layout {
         padding: clamp(8px, 1.5vh, 12px);
     }
 
@@ -399,11 +403,11 @@ body {
     }
 
     .logo {
-        font-size: clamp(1rem, 2vw, 1.2rem);
+        font-size: clamp(1.1rem, 2.3vw, 1.4rem);
     }
 
     .welcome-section p {
-        font-size: clamp(0.7rem, 1.8vw, 0.8rem);
+        font-size: clamp(0.95rem, 2.3vw, 1.2rem);
     }
 
     .seconds-wheel {
@@ -417,7 +421,7 @@ body {
 }
 
 /* Extra Small Mobile (320px and below) */
-@media (max-wi%h: 360px) {
+@media (max-width: 360px) {
     .main-layout {
         padding: clamp(6px, 1vh, 10px);
     }
@@ -441,15 +445,15 @@ body {
     }
 
     .subtitle {
-        font-size: clamp(0.75rem, 2vw, 0.85rem);
+        font-size: clamp(0.95rem, 2.5vw, 1.1rem);
     }
 
     .welcome-section h2 {
-        font-size: clamp(0.9rem, 2vw, 1rem);
+        font-size: clamp(1.1rem, 2.5vw, 1.3rem);
     }
 
     .welcome-section p {
-        font-size: clamp(0.65rem, 1.6vw, 0.75rem)
+        font-size: clamp(0.85rem, 2vw, 1rem);
         justify-content: center;
     }
 
@@ -462,8 +466,7 @@ body {
 @media (max-width: 480px) {
     .countdown-container {
         gap: 20px 2%;
-    }clamp(15px, 5vw, 40px);
-    max-width: 100%
+    }
 
     .time-block {
         flex: 1 1 45%;
@@ -483,11 +486,11 @@ body {
     }
 
     .logo {
-        font-size: 1.3rem;
+        font-size: 1.6rem;
     }
 
     .welcome-section p {
-        font-size: 0.85rem;
+        font-size: 1rem;
     }
 }
 
@@ -495,23 +498,21 @@ body {
 /* --- PHASE 1: PARALLAX INTRO ANIMATION --- */
 /* ========================================= */
 
-:root {rem, 15vw, 7rem);
-    /* Slightly larger for mobile punch */
-    font-weight: 700;
-    letter-spacing: clamp(0.3rem, 3vw, 1.5rem);
-    text-transform: uppercase;
-    position: relative;
-    animation:
-        introZoom 3s cubic-bezier(0.8, 0, 0.2, 1) forwards,
-        rgbShift 0.2s infinite;
-    line-height: 1.1;
-    margin: 0
+:root {
+    --neon-cyan: #00f2fe;
+    --neon-pink: #ff00de;
+    --bg-color: #050505;
+    --glass: rgba(255, 255, 255, 0.03);
+}
+
+#intro-screen {
+    position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
-    height: 100vh;clamp(1px, 0.5vw, 3px);
-    font-size: clamp(0.65rem, 2vw, 0.95rem);
-    margin: clamp(15px, 3vh, 30px) 0 0 0
+    height: 100vh;
+    background-color: var(--bg-color);
+    color: white;
     font-family: 'HarryP', 'Syncopate', sans-serif;
     overflow: hidden;
     display: flex;
@@ -549,8 +550,8 @@ body {
 }
 
 .parallax-title {
-    font-size: clamp(2.2rem, 12vw, 8vw);
-    /* Slightly larger for mobile punch */
+    font-size: clamp(4rem, 20vw, 15rem);
+    /* Significantly larger */
     font-weight: 700;
     letter-spacing: clamp(0.4rem, 4vw, 2rem);
     text-transform: uppercase;
@@ -563,9 +564,9 @@ body {
 .click-instruction {
     font-family: 'HarryP', 'Roboto', sans-serif;
     font-weight: 300;
-    letter-spacing: 3px;
-    font-size: 0.8rem;
-    margin-top: 30px;
+    letter-spacing: 4px;
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    margin-top: 50px;
     color: rgba(255, 255, 255, 0.6);
     animation: pulse 2s infinite;
     text-transform: uppercase;
