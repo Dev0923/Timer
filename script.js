@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
         }
         draw() {
-            ctx.fillStyle = 'rgba(0, 242, 254, 0.3)';
+            ctx.fillStyle = 'rgba(255, 215, 0, 0.3)';
             ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
         }
     }
