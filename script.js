@@ -25,10 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
         let numEl = document.createElement("div");
         numEl.classList.add("wheel-number");
         numEl.textContent = numStr;
-        
-        let angleDeg = i * -6; 
+
+        let angleDeg = i * -6;
         numEl.style.transform = `rotate(${angleDeg}deg) translateX(-${radius}px)`;
-        
+
         wheelEl.appendChild(numEl);
         numbersArray.push(numEl);
     }
@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (diff > 30) {
                 diff = 60 - diff;
             }
-            
+
             let opacity = 0;
             if (diff === 0) opacity = 1.0;
             else if (diff === 1) opacity = 0.6;
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
             else opacity = 0.01;
 
             numbersArray[i].style.opacity = opacity;
-            
+
             // Highlight the current number slightly larger? (the original design keeps them all same size, but current is brightest)
             if (diff === 0) {
                 numbersArray[i].style.fontWeight = "500";
@@ -85,5 +85,80 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Initialize and interval
     updateTimer();
-    setInterval(updateTimer, 1000);
+    let mainTimerInterval = setInterval(updateTimer, 1000);
+
+    /* ========================================= */
+    /* --- PHASE 1: PARALLAX INTRO ANIMATION --- */
+    /* ========================================= */
+
+    // 1. CANVAS PARTICLES
+    const canvas = document.getElementById('canvas-bg');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let animationFrameId;
+
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    class Particle {
+        constructor() { this.reset(); }
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 2;
+            this.speedX = Math.random() * 0.4 - 0.2;
+            this.speedY = Math.random() * 0.4 - 0.2;
+        }
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
+        }
+        draw() {
+            ctx.fillStyle = 'rgba(0, 242, 254, 0.3)';
+            ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
+        }
+    }
+
+    for (let i = 0; i < 60; i++) particles.push(new Particle());
+
+    function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => { p.update(); p.draw(); });
+        animationFrameId = requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    // 2. CLICK TO ENTER LOGIC 
+    const introScreen = document.getElementById('intro-screen');
+    const mainTimerContainer = document.getElementById('main-timer-container');
+    const backgroundVideo = document.getElementById('background-video');
+
+    introScreen.addEventListener('click', () => {
+        // Fade out intro
+        introScreen.classList.add('fade-out');
+
+        // Stop canvas animation to save CPU
+        setTimeout(() => {
+            cancelAnimationFrame(animationFrameId);
+            introScreen.style.display = 'none';
+        }, 800); // match CSS transition duration
+
+        // Reveal Main Timer
+        mainTimerContainer.style.display = 'block';
+
+        // Trigger reflow to ensure opacity transition works
+        void mainTimerContainer.offsetWidth;
+        mainTimerContainer.style.opacity = '1';
+
+        // Play video if it was paused
+        if (backgroundVideo) {
+            backgroundVideo.play().catch(e => console.log("Autoplay prevented", e));
+        }
+    });
+
 });
