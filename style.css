@@ -86,18 +86,23 @@ body {
     width: 25%;
     display: flex;
     justify-content: flex-end;
-    align-items: center;
     padding-right: 50px;
+    z-index: 50;
+    /* Ensure it stays above the video */
 }
 
 .logo {
     display: flex;
     align-items: center;
     gap: 12px;
-    font-size: clamp(1.5rem, 4vw, 2.5rem);
-    font-weight: 700;
-    letter-spacing: 2px;
-    color: #ffd700;
+}
+
+.main-logo {
+    height: clamp(120px, 35vh, 320px);
+    /* Massive bump in base size */
+    width: auto;
+    object-fit: contain;
+    display: block;
 }
 
 .center-content {
@@ -326,9 +331,9 @@ body {
         width: 100%;
         display: flex;
         justify-content: center;
-        align-items: center;
         padding: 0;
         flex-shrink: 0;
+        z-index: 50;
         /* Let gap handle spacing instead */
     }
 
